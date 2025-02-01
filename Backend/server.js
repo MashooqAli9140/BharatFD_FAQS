@@ -17,10 +17,11 @@ connectDB();
 app.use(
   cors({
     origin: [
-      "http://localhost:5173", //for development
+      "http://localhost:5173", // Local Development
+      "https://bharatfd-faqs-by-mashooq-ali.onrender.com/", // Deployed Frontend
     ],
     methods: ["GET", "PUT", "POST", "DELETE"],
-    credentials: true, //Allow cookie if needed
+    credentials: true, 
   })
 );
 
