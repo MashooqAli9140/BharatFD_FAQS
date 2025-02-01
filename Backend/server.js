@@ -7,6 +7,7 @@ const FaqsSchema = require("./model/Faqs_model.js");
 const cors = require("cors");
 const translate = require("google-translate-api-x");
 const helmet = require('helmet');
+const path = require("path");
 
 //using body parser for getting data from upcoming url
 app.use(bodyparser.json());
@@ -22,6 +23,10 @@ app.use(
     credentials: true, //Allow cookie if needed
   })
 );
+
+// Serve static files from the `dist` directory
+app.use(express.static(path.join(__dirname, "dist" )));
+
 
 //helmet use for cdnjs fonts and icon from font awesome
 app.use(
@@ -150,6 +155,11 @@ app.put("/api/edit-faq", async( req , res ) => {
     }
 })
 
+
+// sending index.html file for all routes
+app.get("/*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+});
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
