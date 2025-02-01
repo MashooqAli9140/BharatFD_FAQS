@@ -122,7 +122,7 @@ app.put("/api/edit-faq", async( req , res ) => {
     if( !id_selected || !ques_for_edit || !ans_for_edit ) return res.status(400).json({"msge":"please provide details"});
     
     //now find question by id
-    const FindQuestion = await FaqsSchema.findOne({ _id:id_selected   })
+    const FindQuestion = await FaqsSchema.findById(id_selected);
     if( !FindQuestion ) return res.status(404).json({"msge":"question not found"});
 
     //if question is found then do translation and save it to DB
