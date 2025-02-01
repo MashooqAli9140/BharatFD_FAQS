@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./FaqsPage.css";
 import axios from "axios";
 const FaqsPage = () => {
-  const [openans, setOpenAns] = useState(false);
   const [question, setQuestion] = useState("");
   const [answer, setanswer] = useState("");
-  const [ loading , setloading ] = useState(null);
+  const [loading, setloading] = useState(null);
+  const [FaqData, setFaqData] = useState([]);
+  const [selectedLang, setSelectedLang] = useState("");
+  const [selectedques, setSelectedques] = useState(null);
 
   async function AddNewFaq(e) {
     e.preventDefault();
@@ -14,7 +16,7 @@ const FaqsPage = () => {
       answer,
     };
     if (!question || !answer) return alert("please add values");
-    setloading(true)
+    setloading(true);
     try {
       const response = await axios.post(
         "http://localhost:8000/api/new-faq",
@@ -25,25 +27,41 @@ const FaqsPage = () => {
           },
         }
       );
-      const data = response.data;
-      setQuestion(""),setanswer("");
-      alert("new FAQ added")
-      console.log("new faq saved");
+      setQuestion(""), setanswer("");
+      alert("new FAQ added");
+      window.location.reload();
     } catch (error) {
       console.log(error.message, "error while saving new faq");
-      alert(`Error: ${error.message}`)
-    }
-    finally{
+      alert(`Error: ${error.message}`);
+    } finally {
       setloading(false);
     }
   }
 
-  if( loading ){
-    return( 
-    <div>
-       <h1> Saving new FAQ please wait... </h1>
-    </div>
-    )
+  useEffect(() => {
+    async function GetFaqData() {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/faqs?lang=${selectedLang}`
+        );
+        setFaqData(response.data.data);
+      } catch (error) {
+        console.log("error while fetching the data");
+      }
+    }
+    GetFaqData();
+  }, [selectedLang]);
+
+  const handleClick = (question) => {
+    setSelectedques((prev) => (prev === question ? null : question)); // Toggle logic
+  };
+
+  if (loading) {
+    return (
+      <div>
+        <h1> Saving new FAQ please wait... </h1>
+      </div>
+    );
   }
 
   return (
@@ -69,32 +87,71 @@ const FaqsPage = () => {
       <div id="faqs-box-outer">
         <div id="faqs-box-inner">
           <div id="language-btn-div">
-            <button id="language-btn"> English </button>
-            <button id="language-btn"> Hindi </button>
-            <button id="language-btn"> Bengali </button>
-            <button id="language-btn"> Tamil </button>
-          </div>
-
-          <div id="q-a-div">
-            <button
-              id="question-open-btn"
-              onClick={() => setOpenAns((prev) => !prev)}
-            >
-              <div id="ques-div">
-                <p style={{ color: openans ? "#2C387A" : "black" }}>
-                  {" "}
-                  What is your name?{" "}
-                </p>
-                <p style={{ display: openans ? "none" : "block" }}> Show </p>
-                <p style={{ display: openans ? "block" : "none" }}> Hide </p>
-              </div>
-            </button>
-
-            <div id="ans-div" style={{ display: openans ? "block" : "none" }}>
+            <button id="language-btn" onClick={() => setSelectedLang("")}>
               {" "}
-              <p> My name is BharatFD </p>{" "}
-            </div>
+              English{" "}
+            </button>
+            <button id="language-btn" onClick={() => setSelectedLang("hi")}>
+              {" "}
+              Hindi{" "}
+            </button>
+            <button id="language-btn" onClick={() => setSelectedLang("bn")}>
+              {" "}
+              Bengali{" "}
+            </button>
+            <button id="language-btn" onClick={() => setSelectedLang("ta")}>
+              {" "}
+              Tamil{" "}
+            </button>
           </div>
+
+          {FaqData &&
+            FaqData.map((data) => (
+              <div id="q-a-div" key={data._id}>
+                <button
+                  id="question-open-btn"
+                  onClick={(e) => handleClick(data.question)}
+                >
+                  <div id="ques-div">
+                    <p
+                      style={{
+                        color:
+                          selectedques === data.question ? "#2C387A" : "black",
+                      }}
+                    >
+                      {data.question}
+                    </p>
+                    <p
+                      style={{
+                        display:
+                          selectedques === data.question ? "none" : "block",
+                      }}
+                    >
+                      {" "}
+                      Show{" "}
+                    </p>
+                    <p
+                      style={{
+                        display:
+                          selectedques === data.question ? "block" : "none",
+                      }}
+                    >
+                      {" "}
+                      Hide{" "}
+                    </p>
+                  </div>
+                </button>
+
+                <div
+                  id="ans-div"
+                  style={{
+                    display: selectedques === data.question ? "block" : "none",
+                  }}
+                >
+                  <p> {data.answer} </p>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
       {/* //ADD NEW FAQS SECTION */}
@@ -112,7 +169,7 @@ const FaqsPage = () => {
                 width: "100%",
                 padding: "10px 15px 10px 15px",
                 border: "1px solid #212426",
-                value:{ question }
+                value: { question },
               }}
               type="text"
               placeholder="Type question here..."
@@ -125,7 +182,7 @@ const FaqsPage = () => {
                 width: "100%",
                 padding: "10px 15px 10px 15px",
                 border: "1px solid #212426",
-                value:{ answer }
+                value: { answer },
               }}
               type="text"
               placeholder="Type answer here..."

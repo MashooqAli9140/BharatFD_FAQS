@@ -71,7 +71,7 @@ span{
     /* background-color: #00b994; */
     padding: 10px 20px 10px 20px;
     border-top: 1px solid #21242625;
-
+    display: none; /* Ensure default is hidden */
 }
 #question-open-btn{
     background: none;
