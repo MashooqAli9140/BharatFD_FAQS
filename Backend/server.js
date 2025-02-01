@@ -90,6 +90,46 @@ app.get("/api/faqs", async( req , res ) => {
 })
 
 
+app.put("/api/edit-faq", async( req , res ) => {
+    const { id_selected , ques_for_edit , ans_for_edit } = req.body;
+    if( !id_selected || !ques_for_edit || !ans_for_edit ) return res.status(400).json({"msge":"please provide details"});
+    
+    //now find question by id
+    const FindQuestion = await FaqsSchema.findOne({ _id:id_selected   })
+    if( !FindQuestion ) return res.status(404).json({"msge":"question not found"});
+
+    //if question is found then do translation and save it to DB
+    try {
+       //convert questions to other languages
+       const q_hi = await translate(ques_for_edit, { to: "hi" });
+       const q_bn = await translate(ques_for_edit, { to: "bn" });
+       const q_ta = await translate(ques_for_edit, { to: "ta" });
+
+           //convert answers to other languages
+       const a_hi = await translate(ans_for_edit, { to: "hi" });
+       const a_bn = await translate(ans_for_edit, { to: "bn" });
+       const a_ta = await translate(ans_for_edit, { to: "ta" });
+
+           //asign the final converted question
+           FindQuestion.question = ques_for_edit
+           FindQuestion.question_hi = q_hi.text;
+           FindQuestion.question_bn = q_bn.text;
+           FindQuestion.question_ta = q_ta.text;
+
+           //asign the final converted answer
+           FindQuestion.answer    = ans_for_edit;
+           FindQuestion.answer_hi = a_hi.text;
+           FindQuestion.answer_bn = a_bn.text;
+           FindQuestion.answer_ta = a_ta.text;
+
+        await FindQuestion.save()
+        return res.status(201).json({"msge":"Edit success success", data: FindQuestion })
+    } catch (error) {
+      return res.status(400).json({"msge":"error while updating the data", error: error.message })        
+    }
+})
+
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`server running on PORT ${PORT}`);
