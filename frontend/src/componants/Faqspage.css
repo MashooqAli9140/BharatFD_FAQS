@@ -1,3 +1,26 @@
 #Navbar{
-    background-color: aqua;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    padding: 20px 100px 20px 100px;
+    justify-content: space-between;
+    border-bottom: 1px solid #21242627;
+    align-content: center;
+    align-items: center;
+}
+span{
+    color: #E4803A;
+}
+#navleft{
+    /* background-color: aquamarine; */
+    padding: 10px 10px 10px 10px  ;
+}
+#navright{
+    /* background-color: blue; */
+    padding: 10px 10px 10px 10px  ;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    align-content: center;
+    align-items: center;
+
 }
