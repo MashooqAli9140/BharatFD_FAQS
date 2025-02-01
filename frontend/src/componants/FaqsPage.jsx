@@ -3,6 +3,21 @@ import './FaqsPage.css';
 
 const FaqsPage = () => {
       const [ openans , setOpenAns ] = useState(false);
+      const [ question , setQuestion ] = useState("");
+      const [ answer , setanswer ] = useState("");
+      
+
+      async function AddNewFaq(e) {
+            e.preventDefault();
+            const newFaq = {
+                  question,
+                  answer
+            }
+            if( !question || !answer ) return alert("please add values")
+            // const response = 
+
+      }
+
 
 
       
@@ -53,10 +68,10 @@ const FaqsPage = () => {
               <h2> Add new FAQS </h2>
            </div>
            <div id='add-ques-form'>
-                 <form action=""> 
-                    <input style={{ outline:"none", margin:"5px 0px 5px 0px", width:"100%", padding:"10px 15px 10px 15px", border:'1px solid #212426'}} type="text" placeholder='Type question here...' />
-                    <input style={{ outline:"none", margin:"5px 0px 5px 0px", width:"100%", padding:"10px 15px 10px 15px", border:'1px solid #212426'}} type="text" placeholder='Type answer here...' />
-                    <button style={{ outline:"none", margin:"5px 0px 5px 0px", width:"100%", padding:"10px 15px 10px 15px"}} id='newfaq-add-btn'>
+                 <form onSubmit={ (e) => AddNewFaq(e) } > 
+                    <input onChange={ (e) => setQuestion(e.target.value)} style={{ outline:"none", margin:"5px 0px 5px 0px", width:"100%", padding:"10px 15px 10px 15px", border:'1px solid #212426'}} type="text" placeholder='Type question here...' />
+                    <input onChange={ (e) => setanswer(e.target.value)} style={{ outline:"none", margin:"5px 0px 5px 0px", width:"100%", padding:"10px 15px 10px 15px", border:'1px solid #212426'}} type="text" placeholder='Type answer here...' />
+                    <button type='submit' style={{ outline:"none", margin:"5px 0px 5px 0px", width:"100%", padding:"10px 15px 10px 15px"}} id='newfaq-add-btn'>
                            Add
                     </button>
                  </form>
