@@ -23,7 +23,7 @@ const FaqsPage = () => {
     setloading(true);
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/new-faq",
+        "https://bharatfd-faqs-by-mashooq-ali.onrender.com/api/new-faq",
         newFaq,
         {
           Headers: {
@@ -46,7 +46,7 @@ const FaqsPage = () => {
     async function GetFaqData() {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/faqs?lang=${selectedLang}`
+          `https://bharatfd-faqs-by-mashooq-ali.onrender.com/api/faqs?lang=${selectedLang}`
         );
         setFaqData(response.data.data);
       } catch (error) {
@@ -78,7 +78,7 @@ const FaqsPage = () => {
     setloading(true);
     try {
       const response = await axios.put(
-        "http://localhost:8000/api/edit-faq",
+        "https://bharatfd-faqs-by-mashooq-ali.onrender.com/api/edit-faq",
         EditedData,
         {
           Headers: {
