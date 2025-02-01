@@ -23,7 +23,7 @@ const FaqsPage = () => {
      <div id='faqs-heading'>
               <h2> Frequently Asked Questions </h2>
      </div>
-     <div id='faqs-box-outer'>
+    <div id='faqs-box-outer'>
             <div id='faqs-box-inner'>
                  <div id='language-btn-div'>
                  <button id='language-btn'> English </button>
@@ -45,7 +45,23 @@ const FaqsPage = () => {
                  </div>
                  
             </div>
-     </div>
+    </div>
+
+    {/* //ADD NEW FAQS SECTION */}
+    <div id='new-faq-add-box'>
+           <div> 
+              <h2> Add new FAQS </h2>
+           </div>
+           <div id='add-ques-form'>
+                 <form action=""> 
+                    <input style={{ outline:"none", margin:"5px 0px 5px 0px", width:"100%", padding:"10px 15px 10px 15px", border:'1px solid #212426'}} type="text" placeholder='Type question here...' />
+                    <input style={{ outline:"none", margin:"5px 0px 5px 0px", width:"100%", padding:"10px 15px 10px 15px", border:'1px solid #212426'}} type="text" placeholder='Type answer here...' />
+                    <button style={{ outline:"none", margin:"5px 0px 5px 0px", width:"100%", padding:"10px 15px 10px 15px"}} id='newfaq-add-btn'>
+                           Add
+                    </button>
+                 </form>
+           </div>
+    </div>
 
     </div>
   )

@@ -80,3 +80,23 @@ span{
     width: 100%;
     cursor: pointer;
 }
+#new-faq-add-box{
+        /* background-color: #E4803A; */
+        padding: 20px 100px 20px 100px;
+        text-align: center;
+        color: #2C387A;
+}
+#add-ques-form{
+    background-color: #E4803A;
+    padding: 20px 20px 20px 20px;
+    max-width: 500px;
+    margin: 0px auto 0px;
+    border-radius: 25px;
+}
+#newfaq-add-btn{
+    background: #2C387A;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
