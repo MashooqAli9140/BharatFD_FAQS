@@ -70,6 +70,24 @@ app.post("/api/new-faq", async (req, res) => {
 });
 
 
+app.get("/api/faqs", async( req , res ) => {
+    const lang = req.query.lang
+   
+    try {
+        const result = await FaqsSchema.find(); //getting all the faqs
+
+        //finding questions answers based on lang prefrence
+        const translatedText = result.map( ( data ) => ( {
+            question: data[ `question_${lang}` ] || data.question, 
+            answer: data[ `question_${lang}` ] || data.answer, 
+        }) )
+
+        return res.status(200).json({"msge":"fecth success", data: translatedText })
+    } catch (error) {
+      return res.status(400).json({"msge":"error while fetching the data", error: error.message })        
+    }
+})
+
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
