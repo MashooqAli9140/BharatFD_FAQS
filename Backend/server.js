@@ -78,6 +78,7 @@ app.get("/api/faqs", async( req , res ) => {
 
         //finding questions answers based on lang prefrence
         const translatedText = result.map( ( data ) => ( {
+             id: data._id,
             question: data[ `question_${lang}` ] || data.question, 
             answer: data[ `answer_${lang}` ] || data.answer, 
         }) )
