@@ -14,7 +14,18 @@ const FaqsPage = () => {
                   answer
             }
             if( !question || !answer ) return alert("please add values")
-            // const response = 
+                  try {
+                        const response = await axios.post("http://localhost:8000/api/new-faq", newFaq, {
+                              Headers:{
+                                    "Content-Type": "application/json"
+                              },
+                              })
+                        const data = response.data;
+                        console.log("new faq saved");
+                  } catch (error) {
+                        console.log(error.message , "error while saving new faq");
+                  }
+
 
       }
 
