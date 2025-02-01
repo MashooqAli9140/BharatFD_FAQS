@@ -5,8 +5,8 @@ const bodyparser = require("body-parser");
 const connectDB = require("./config/ConnectDB.js");
 const FaqsSchema = require("./model/Faqs_model.js");
 const cors = require("cors");
-// const translate = require('@vitalets/google-translate-api');
 const translate = require("google-translate-api-x");
+const helmet = require('helmet');
 
 //using body parser for getting data from upcoming url
 app.use(bodyparser.json());
@@ -20,6 +20,27 @@ app.use(
     ],
     methods: ["GET", "PUT", "POST", "DELETE"],
     credentials: true, //Allow cookie if needed
+  })
+);
+
+//helmet use for cdnjs fonts and icon from font awesome
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"], // Restricts default sources
+      fontSrc: [
+        "'self'",
+        "https://fonts.googleapis.com", // For Google Fonts
+        "https://fonts.gstatic.com", // For Google Fonts
+        "https://cdnjs.cloudflare.com", // For Font Awesome fonts
+      ],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'", // Needed for inline styles in some cases
+        "https://fonts.googleapis.com", // For Google Fonts styles
+        "https://cdnjs.cloudflare.com", // For Font Awesome CSS
+      ],
+    },
   })
 );
 
@@ -69,7 +90,7 @@ app.post("/api/new-faq", async (req, res) => {
   }
 });
 
-
+//created get req for all FAQ's
 app.get("/api/faqs", async( req , res ) => {
     const lang = req.query.lang
    
@@ -89,7 +110,7 @@ app.get("/api/faqs", async( req , res ) => {
     }
 })
 
-
+//created put req for updating single FAQ's
 app.put("/api/edit-faq", async( req , res ) => {
     const { id_selected , ques_for_edit , ans_for_edit } = req.body;
     if( !id_selected || !ques_for_edit || !ans_for_edit ) return res.status(400).json({"msge":"please provide details"});
