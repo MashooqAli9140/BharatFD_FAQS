@@ -22,5 +22,61 @@ span{
     gap: 10px;
     align-content: center;
     align-items: center;
+}
+#faqs-heading{
+    /* background-color: #E4803A; */
+    padding: 20px 100px 20px 100px;
+    text-align: center;
+    color: #2C387A;
+}
+#faqs-box-outer{
+        /* background-color: #E4803A; */
+        padding: 20px 100px 20px 100px;
+}
+#faqs-box-inner{
+    background-color: #EFF2F4;
+    padding: 20px 20px 20px 20px;
+    border-radius: 25px;
+}
+#language-btn-div{
+    /* background-color: #E4803A; */
+    display: flex;
+    padding: 20px 10px 20px 10px;
+    justify-content: space-between;
+}
+#language-btn{
+    padding: 12px 15px 12px 15px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+#q-a-div{
+    background-color: #ffffff;
+    padding: 20px 0px 20px 0px;
+    border-radius: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+#ques-div{
+    /* background-color: #2C387A; */
+    padding: 10px 20px 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
+}
+#ans-div{
+    /* background-color: #00b994; */
+    padding: 10px 20px 10px 20px;
+    border-top: 1px solid #21242625;
 
+}
+#question-open-btn{
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    cursor: pointer;
 }
