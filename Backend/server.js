@@ -79,7 +79,7 @@ app.get("/api/faqs", async( req , res ) => {
         //finding questions answers based on lang prefrence
         const translatedText = result.map( ( data ) => ( {
             question: data[ `question_${lang}` ] || data.question, 
-            answer: data[ `answer${lang}` ] || data.answer, 
+            answer: data[ `answer_${lang}` ] || data.answer, 
         }) )
 
         return res.status(200).json({"msge":"fecth success", data: translatedText })
